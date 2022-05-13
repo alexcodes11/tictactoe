@@ -32,12 +32,12 @@ def player(board):
             for j in range(len(board[0])):
                 if board[i][j] == "X":
                     xcount+=1
-                else:
+                if board[i][j] == "O":
                     ocount+=1
-                if xcount > ocount:
-                    return O
-                else:
-                    return X
+        if xcount > ocount:
+            return O
+        else:
+            return X
 
 
 
@@ -45,11 +45,11 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    actions = ()
+    actions = set()
     for i in range(3):
         for j in range(3):
             if board[i][j] == EMPTY:
-                actions =  actions + ((i,j),)
+                actions.add((i,j))
     return actions
 
 
@@ -58,9 +58,12 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-
-   
-    
+    copyboard = copy.deepcopy(board)
+    if action in actions(board):
+        i = action[0]
+        j = action[1]
+        copyboard[i][j] = player(board)
+    return copyboard
 
 
 def winner(board):
@@ -89,3 +92,4 @@ def minimax(board):
     Returns the optimal action for the current player on the board.
     """
     raise NotImplementedError
+    # this returns the best possible (i,j) pattern. which is then used in the results function.
