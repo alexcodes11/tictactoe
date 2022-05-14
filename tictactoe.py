@@ -70,21 +70,47 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    for i in range(3):
+        # check rows 
+        if board[i][0] == "X" and board[i][1] == "X" and board[i][2] == "X":
+            return X
+        if board[i][0] == "O" and board[i][1] == "O" and board[i][2] == "O":
+            return O
+        # check columns
+        if board[0][i] == "X" and board[1][i] == "X" and board[2][i] == "X":
+            return X
+        if board[0][i] == "O" and board[1][i] == "O" and board[2][i] == "O":
+            return O
+
+        # check diagonals
+        if board[0][0] == board[1][1] == board[2][2] != EMPTY:
+            return board[0][0]
+        if board[0][2] == board[1][1] == board[2][0] != EMPTY:
+            return board[0][2]
+
+    return None
 
 
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    return False
-
+    if len(actions(board)) == 0 or winner(board) != None:
+        return True
+    else:
+        return False
 
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
+    if terminal(board) == True:
+        if winner(board) == X:
+            return 1
+        elif winner(board) == O:
+            return -1
+        else:
+            return 0
 
 
 def minimax(board):
