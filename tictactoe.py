@@ -2,8 +2,12 @@
 Tic Tac Toe Player
 """
 
+from ctypes import util
 import math
 import copy
+from re import U
+
+from numpy import maximum
 
 X = "X"
 O = "O"
@@ -117,5 +121,53 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
     # this returns the best possible (i,j) pattern. which is then used in the results function.
+    if terminal(board):
+        return None
+
+    if player(board) == X: # maximiaze the score. 
+        pick = maximum(board)
+        return pick
+
+    else: # player == O minimiaze  the score 
+        pick = minimum(board)
+        return pick
+    
+def maximum(board):
+    v = float('-inf')
+    for action in actions(board):
+        i = minvalue(result(board, action))
+        if i > v:
+            v = i
+            pick = action  
+    return pick
+
+def minimum(board):      
+    v = float('inf')
+    for action in actions(board):
+        i = minvalue(result(board, action))
+        if i < v:
+            v = i
+            pick = action  
+    return pick
+
+def minvalue(board):
+
+    if terminal(board):
+        return utility(board)
+    v = float('inf')
+    for action in actions(board):
+        v = min(v, maxvalue(result(board, action)))
+    return v
+    
+
+def maxvalue(board):
+
+    if terminal(board):
+        return utility(board)
+
+    v = float("-inf")
+    for action in actions(board): 
+        v = max(v, minvalue(result(board, action)))
+    return v
+    
