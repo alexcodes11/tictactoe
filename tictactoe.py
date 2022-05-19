@@ -145,7 +145,7 @@ def maximum(board):
 def minimum(board):      
     v = float('inf')
     for action in actions(board):
-        i = minvalue(result(board, action))
+        i = maxvalue(result(board, action))
         if i < v:
             v = i
             pick = action  
