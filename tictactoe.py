@@ -140,6 +140,8 @@ def maximum(board):
         if i > v:
             v = i
             pick = action  
+            if v == 1:
+                return pick
     return pick
 
 def minimum(board):      
@@ -149,6 +151,8 @@ def minimum(board):
         if i < v:
             v = i
             pick = action  
+            if v == -1:
+                return pick
     return pick
 
 def minvalue(board):
